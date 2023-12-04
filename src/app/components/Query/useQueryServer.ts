@@ -1,25 +1,21 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { useMemo } from "react";
 
 import type fetchData from "@/api/data";
 
 type QueryData = Awaited<ReturnType<typeof fetchData>>;
 const getInitialData = (data: QueryData) => {
   const year = new Date().getFullYear();
-  const semesters = [
-    ...data.semesters.filter((s) => !s.code),
-    ...[...Array(10)]
-      .map((_, i) => year - i)
-      .flatMap((y) =>
-        data.semesters
-          .filter((s) => s.code)
-          .reverse()
-          .map((s) => ({
-            label: `${y}/${s.label}`,
-            code: `${y}/${s.code}`,
-          })),
-      ),
-  ];
+  const semesters = [...Array(10)]
+    .map((_, i) => year - i)
+    .flatMap((y) =>
+      data.semesters
+        .filter((s) => s.code)
+        .reverse()
+        .map((s) => ({
+          label: `${y}/${s.label}`,
+          code: `${y}/${s.code}`,
+        })),
+    );
   const month = new Date().getMonth();
   const semester = [1, 1, 1, 1, 1, 2, 3, 3, 3, 3, 3, 4][month];
   const universities = data.universities.filter((u) => u.code);
@@ -45,12 +41,15 @@ const useQueryServer = (
   const { data, initialData } = getInitialData(rawData);
   const query = {
     ...initialData,
-    ...Object.fromEntries(searchParams.entries()),
+    ...Object.fromEntries(
+      Array.from(searchParams.entries()).filter(([, v]) => v),
+    ),
   };
   const filteredData = {
     ...data,
     types: data.types.filter((t) => t.school === query.university || !t.code),
   };
+  console.log(query);
 
   return { data: filteredData, query };
 };
