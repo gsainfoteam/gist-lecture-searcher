@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
 import type fetchData from "@/api/data";
@@ -36,7 +37,7 @@ const getInitialData = (data: QueryData) => {
     initialData: {
       university: universities[universities.length - 1].code,
       department: "",
-      semester: `${year}/${semester}`,
+      semester: `${year}/${data.semesters[semester].code}`,
       creditType: "",
       research: "",
       level: "",
@@ -126,12 +127,35 @@ const SelectChip = ({
 };
 
 const Inner = ({ data: rawData }: { data: QueryData }) => {
-  const { data, initialData } = getInitialData(rawData);
+  const { data, initialData } = useMemo(
+    () => getInitialData(rawData),
+    [rawData],
+  );
   const [query, setQuery] = useState(initialData);
   const filteredData = {
     ...data,
     types: data.types.filter((t) => t.school === query.university || !t.code),
   };
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+
+  useEffect(() => {
+    const params = new URLSearchParams(
+      Object.entries(query).filter(([, v]) => v),
+    );
+    if (params.size) {
+      replace(`?${params.toString()}`);
+    } else {
+      replace(``);
+    }
+  }, [query, replace, searchParams]);
+
+  useEffect(() => {
+    const params = searchParams.entries();
+    const query = Object.fromEntries(params);
+    setQuery({ ...initialData, ...query });
+  }, [searchParams, initialData]);
+
   const SC = ({
     title,
     data: dataField,
