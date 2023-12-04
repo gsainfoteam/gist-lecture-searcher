@@ -1,2 +1,16 @@
 {
+  "departments": "개설부서",
+  "semesters": "년도/학기",
+  "universities": "대학분류",
+  "creditTypes": "이수",
+  "researches": "교과연구",
+  "levels": "과정",
+  "languages": "언어",
+  "code":"코드",
+  "title": "교과목명",
+  "professor": "담당교수",
+  "pnt": "강실학",
+  "timeTables": "시간표",
+  "room": "강의실",
+  "count": "인원"
 }

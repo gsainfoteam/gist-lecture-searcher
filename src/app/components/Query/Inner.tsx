@@ -1,10 +1,10 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 
-import type fetchData from "@/api/data";
+import { PropsWithLng } from "@/app/i18next";
+import { useTranslation } from "@/app/i18next/client";
 
 import useQuery from "./useQuery";
 
@@ -93,8 +93,12 @@ const SelectChip = ({
   );
 };
 
-const Inner = ({ data: rawData }: { data: Parameters<typeof useQuery>[0] }) => {
+const Inner = ({
+  data: rawData,
+  lng,
+}: PropsWithLng<{ data: Parameters<typeof useQuery>[0] }>) => {
   const { data, query, updateQuery } = useQuery(rawData);
+  const { t } = useTranslation(lng);
 
   const SC = ({
     title,
@@ -116,15 +120,19 @@ const Inner = ({ data: rawData }: { data: Parameters<typeof useQuery>[0] }) => {
 
   return (
     <section className="flex flex-wrap gap-2 rounded-lg border border-neutral-400 p-2 dark:border-neutral-600">
-      <SC title="개설부서" data="departments" value="department" />
-      <SC title="년도/학기" data="semesters" value="semester" />
+      <SC title={t("departments")} data="departments" value="department" />
+      <SC title={t("semesters")} data="semesters" value="semester" />
       {showDetail && (
         <>
-          <SC title="대학분류" data="universities" value="university" />
-          <SC title="이수" data="credits" value="creditType" />
-          <SC title="교과연구" data="researches" value="research" />
-          <SC title="과정" data="types" value="level" />
-          <SC title="언어" data="languages" value="language" />
+          <SC
+            title={t("universities")}
+            data="universities"
+            value="university"
+          />
+          <SC title={t("creditTypes")} data="credits" value="creditType" />
+          <SC title={t("researches")} data="researches" value="research" />
+          <SC title={t("levels")} data="types" value="level" />
+          <SC title={t("languages")} data="languages" value="language" />
         </>
       )}
       <button

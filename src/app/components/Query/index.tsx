@@ -1,18 +1,19 @@
 import { Suspense } from "react";
 
 import fetchData from "@/api/data";
+import { PropsWithLng } from "@/app/i18next";
 
 import Inner from "./Inner";
 
-const Loader = async () => {
-  const data = await fetchData();
-  return <Inner data={data} />;
+const Loader = async ({ lng }: PropsWithLng) => {
+  const data = await fetchData(lng);
+  return <Inner data={data} lng={lng} />;
 };
 
-const Query = () => {
+const Query = ({ lng }: PropsWithLng) => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Loader />
+      <Loader lng={lng} />
     </Suspense>
   );
 };

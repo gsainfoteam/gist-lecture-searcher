@@ -1,3 +1,5 @@
+import { Locale } from "@/app/i18next/settings";
+
 import { listQuery } from "./zeus";
 
 interface OptionCode {
@@ -74,9 +76,9 @@ const dataTransformer = (data: Data) => ({
   credits: data.dsCptnDivCd.map(labelCode),
 });
 
-const fetchData = () =>
-  listQuery<Data>("/uls/ulsOpenListQ/onload", { lang_div: "kor" }).then(
-    dataTransformer,
-  );
+const fetchData = (lng: Locale) =>
+  listQuery<Data>("/uls/ulsOpenListQ/onload", {
+    lang_div: lng === "ko" ? "kor" : "eng",
+  }).then(dataTransformer);
 
 export default fetchData;

@@ -1,2 +1,16 @@
 {
+  "departments": "Opened By",
+  "semesters": "Year/Semester",
+  "universities": "Graduate/undergraduate",
+  "creditTypes": "Type1",
+  "researches": "Type2",
+  "levels": "Level",
+  "languages": "Language",
+  "code":"Code",
+  "title": "Title",
+  "professor": "Instructor",
+  "pnt": "Credit",
+  "timeTables": "Timetable",
+  "room": "Class Room",
+  "count": "Size"
 }

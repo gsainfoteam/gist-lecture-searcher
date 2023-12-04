@@ -3,15 +3,18 @@ import { Suspense } from "react";
 
 import fetchCourse from "@/api/course";
 import fetchData from "@/api/data";
+import { createTranslation, PropsWithLng } from "@/app/i18next";
 
 import useQueryServer from "../Query/useQueryServer";
 
 const Loader = async ({
+  lng,
   searchParams,
-}: {
+}: PropsWithLng<{
   searchParams: Record<string, string>;
-}) => {
-  const data = await fetchData();
+}>) => {
+  const { t } = await createTranslation(lng);
+  const data = await fetchData(lng);
   const {
     query: { semester, ...query },
   } = useQueryServer(
@@ -28,15 +31,15 @@ const Loader = async ({
       <table>
         <thead>
           <tr>
-            <th>코드</th>
-            <th>교과목명</th>
-            <th>이수</th>
-            <th>담당교수</th>
-            <th>강실학</th>
-            <th>시간표</th>
-            <th>강의실</th>
-            <th>인원</th>
-            <th>언어</th>
+            <th>{t("code")}</th>
+            <th>{t("title")}</th>
+            <th>{t("creditTypes")}</th>
+            <th>{t("professor")}</th>
+            <th>{t("pnt")}</th>
+            <th>{t("timeTables")}</th>
+            <th>{t("room")}</th>
+            <th>{t("count")}</th>
+            <th>{t("languages")}</th>
           </tr>
         </thead>
         <tbody>
@@ -81,13 +84,14 @@ const Loader = async ({
 };
 
 const Lectures = ({
+  lng,
   searchParams,
-}: {
+}: PropsWithLng<{
   searchParams: Record<string, string>;
-}) => {
+}>) => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Loader searchParams={searchParams} />
+      <Loader searchParams={searchParams} lng={lng} />
     </Suspense>
   );
 };
