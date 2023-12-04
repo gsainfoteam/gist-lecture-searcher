@@ -49,7 +49,6 @@ const useQueryServer = (
     ...data,
     types: data.types.filter((t) => t.school === query.university || !t.code),
   };
-  console.log(query);
 
   return { data: filteredData, query };
 };
