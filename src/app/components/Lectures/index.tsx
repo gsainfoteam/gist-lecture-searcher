@@ -90,7 +90,10 @@ const Lectures = ({
   searchParams: Record<string, string>;
 }>) => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={<div>Loading...</div>}
+      key={JSON.stringify(searchParams)}
+    >
       <Loader searchParams={searchParams} lng={lng} />
     </Suspense>
   );
