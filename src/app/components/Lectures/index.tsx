@@ -21,7 +21,7 @@ const Loader = async ({
     data,
     new URLSearchParams(searchParams) as ReadonlyURLSearchParams,
   );
-  const courses = await fetchCourse({
+  const courses = await fetchCourse(lng, {
     ...query,
     year: semester.split("/")[0],
     semester: semester.split("/")[1],
