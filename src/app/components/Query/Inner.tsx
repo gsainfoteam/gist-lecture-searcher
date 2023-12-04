@@ -1,7 +1,7 @@
 'use client';
 
 import type fetchData from '@/api/data';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 type QueryData = Awaited<ReturnType<typeof fetchData>>;
@@ -49,13 +49,11 @@ const SelectChip = ({
   value,
   onChangeValue,
   items,
-  notUnselectable,
 }: {
   title: string;
   value: string;
   onChangeValue: (value?: string) => void;
   items: CodeLabel[];
-  notUnselectable?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
   const selected = items.find((v) => v.code === value);
@@ -94,8 +92,8 @@ const SelectChip = ({
             }}
             tabIndex={-1}
           >
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-full p-8">
-              <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg overflow-y-scroll h-full w-max">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-full p-8 flex items-center">
+              <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg overflow-y-scroll max-h-full w-max">
                 <div className="flex flex-col gap-2 p-4">
                   {items.map(({ code, label }) => (
                     <button
