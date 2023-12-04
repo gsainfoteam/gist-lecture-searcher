@@ -75,6 +75,8 @@ const dataTransformer = (data: Data) => ({
 });
 
 const fetchData = () =>
-  listQuery<Data>('/zeus/onload', { lang_div: 'kor' }).then(dataTransformer);
+  listQuery<Data>('/uls/ulsOpenListQ/onload', { lang_div: 'kor' }).then(
+    dataTransformer,
+  );
 
 export default fetchData;

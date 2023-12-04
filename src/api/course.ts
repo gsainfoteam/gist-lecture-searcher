@@ -110,7 +110,7 @@ const fetchCourse = (params?: {
   research: string;
   level: string;
 }) =>
-  listQuery<Parameters<typeof courseTransform>[0]>('/zeus/select', {
+  listQuery<Parameters<typeof courseTransform>[0]>('/uls/ulsOpenListQ/select', {
     univ_clsf_cd: params?.university, // 대학분류
     yy: params?.year,
     shtm_cd: params?.semester, // 학기
