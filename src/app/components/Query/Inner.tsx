@@ -62,7 +62,7 @@ const SelectChip = ({
     <div onClick={() => setOpen(true)} role="button">
       <div className="hidden">{title}</div>
       <div
-        className={`rounded-lg bg-neutral-100 p-2 shadow-lg dark:bg-neutral-800 ${
+        className={`rounded-lg bg-neutral-100 p-2 dark:bg-neutral-800 ${
           selected?.code ? "" : "text-neutral-600 dark:text-neutral-400"
         }`}
       >
@@ -94,12 +94,19 @@ const SelectChip = ({
             tabIndex={-1}
           >
             <div className="absolute left-1/2 top-1/2 flex h-full -translate-x-1/2 -translate-y-1/2 transform items-center p-8">
-              <div className="max-h-full w-max overflow-y-scroll rounded-lg bg-white shadow-lg dark:bg-neutral-800">
+              <div
+                className="scrollbar-thumb-rounded-full max-h-full w-max overflow-y-auto rounded-lg bg-white shadow-lg scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-200 dark:bg-neutral-800
+               dark:scrollbar-thumb-neutral-700"
+              >
                 <div className="flex flex-col gap-2 p-4">
                   {items.map(({ code, label }) => (
                     <button
                       key={code}
-                      className="rounded-lg p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                      className={`rounded-lg p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600 ${
+                        code === value
+                          ? "bg-neutral-100 dark:bg-neutral-700"
+                          : ""
+                      }`}
                       onClick={() => {
                         setOpen(false);
                         onChangeValue(code);
@@ -114,45 +121,6 @@ const SelectChip = ({
           </div>,
           document.body,
         )}
-      {/* <Chip
-        label={value && label ? `${title}: ${label}` : title}
-        onClick={() => setOpen(true)}
-        onDelete={
-          !notUnselectable && value ? () => onChangeValue('') : undefined
-        }
-      /> */}
-      {/* <Dialog
-        open={open}
-        onClose={handleClose}
-        fullWidth
-        maxWidth="sm"
-        fullScreen={fullScreen}
-      >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent dividers>
-          <RadioGroup
-            value={selectedValue}
-            onChange={(e) => setSelectedValue(e.target.value)}
-          >
-            {items
-              .filter((v) => (notUnselectable ? v.code : true))
-              .map(({ code, label }) => (
-                <FormControlLabel
-                  key={code}
-                  value={code}
-                  control={<Radio />}
-                  label={label}
-                />
-              ))}
-          </RadioGroup>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            취소
-          </Button>
-          <Button onClick={handleOk}>확인</Button>
-        </DialogActions>
-      </Dialog> */}
     </div>
   );
 };
