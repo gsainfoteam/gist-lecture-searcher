@@ -62,7 +62,7 @@ const SelectChip = ({
     <div onClick={() => setOpen(true)} role="button">
       <div className="hidden">{title}</div>
       <div
-        className={`bg-neutral-100 dark:bg-neutral-800 p-2 rounded-lg shadow-lg ${
+        className={`rounded-lg bg-neutral-100 p-2 shadow-lg dark:bg-neutral-800 ${
           selected?.code ? "" : "text-neutral-600 dark:text-neutral-400"
         }`}
       >
@@ -93,13 +93,13 @@ const SelectChip = ({
             }}
             tabIndex={-1}
           >
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-full p-8 flex items-center">
-              <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg overflow-y-scroll max-h-full w-max">
+            <div className="absolute left-1/2 top-1/2 flex h-full -translate-x-1/2 -translate-y-1/2 transform items-center p-8">
+              <div className="max-h-full w-max overflow-y-scroll rounded-lg bg-white shadow-lg dark:bg-neutral-800">
                 <div className="flex flex-col gap-2 p-4">
                   {items.map(({ code, label }) => (
                     <button
                       key={code}
-                      className="hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg p-2"
+                      className="rounded-lg p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700"
                       onClick={() => {
                         setOpen(false);
                         onChangeValue(code);
