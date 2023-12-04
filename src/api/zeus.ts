@@ -7,5 +7,7 @@ export const listQuery = async <T>(action: string, body: object) => {
       headers: { 'Content-Type': 'application/json' },
     },
   );
-  return result.json() as T;
+  const res = await result.text();
+  console.log(res);
+  return JSON.parse(res) as T;
 };
