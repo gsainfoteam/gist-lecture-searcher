@@ -148,15 +148,27 @@ const Inner = ({ data: rawData }: { data: QueryData }) => {
       onChangeValue={(v) => setQuery({ ...query, [valueField]: v ?? "" })}
     />
   );
+  const [showDetail, setShowDetail] = useState(false);
+
   return (
-    <section className="flex gap-2 p-2">
+    <section className="m-2 flex flex-wrap gap-2 rounded-lg border border-neutral-400 p-2 dark:border-neutral-600">
       <SC title="대학분류" dataField="universities" valueField="university" />
       <SC title="개설부서" dataField="departments" valueField="department" />
       <SC title="년도/학기" dataField="semesters" valueField="semester" />
       <SC title="이수" dataField="credits" valueField="creditType" />
-      <SC title="교과연구" dataField="researches" valueField="research" />
-      <SC title="과정" dataField="types" valueField="level" />
-      <SC title="언어" dataField="languages" valueField="language" />
+      {showDetail && (
+        <>
+          <SC title="교과연구" dataField="researches" valueField="research" />
+          <SC title="과정" dataField="types" valueField="level" />
+          <SC title="언어" dataField="languages" valueField="language" />
+        </>
+      )}
+      <button
+        className="rounded-lg bg-neutral-100 p-2 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400"
+        onClick={() => setShowDetail(!showDetail)}
+      >
+        {showDetail ? "-" : "+"}
+      </button>
     </section>
   );
 };
