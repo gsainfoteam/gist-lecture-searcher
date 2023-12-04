@@ -134,12 +134,12 @@ const Inner = ({ data: rawData }: { data: QueryData }) => {
   };
   const SC = ({
     title,
-    dataField,
-    valueField,
+    data: dataField,
+    value: valueField,
   }: {
     title: string;
-    dataField: keyof typeof data;
-    valueField: keyof typeof initialData;
+    data: keyof typeof data;
+    value: keyof typeof initialData;
   }) => (
     <SelectChip
       title={title}
@@ -152,19 +152,15 @@ const Inner = ({ data: rawData }: { data: QueryData }) => {
 
   return (
     <section className="m-2 flex flex-wrap gap-2 rounded-lg border border-neutral-400 p-2 dark:border-neutral-600">
-      <SC title="개설부서" dataField="departments" valueField="department" />
-      <SC title="년도/학기" dataField="semesters" valueField="semester" />
+      <SC title="개설부서" data="departments" value="department" />
+      <SC title="년도/학기" data="semesters" value="semester" />
       {showDetail && (
         <>
-          <SC
-            title="대학분류"
-            dataField="universities"
-            valueField="university"
-          />
-          <SC title="이수" dataField="credits" valueField="creditType" />
-          <SC title="교과연구" dataField="researches" valueField="research" />
-          <SC title="과정" dataField="types" valueField="level" />
-          <SC title="언어" dataField="languages" valueField="language" />
+          <SC title="대학분류" data="universities" value="university" />
+          <SC title="이수" data="credits" value="creditType" />
+          <SC title="교과연구" data="researches" value="research" />
+          <SC title="과정" data="types" value="level" />
+          <SC title="언어" data="languages" value="language" />
         </>
       )}
       <button
