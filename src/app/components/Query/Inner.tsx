@@ -95,7 +95,7 @@ const SelectChip = ({
           >
             <div className="absolute left-1/2 top-1/2 flex h-full -translate-x-1/2 -translate-y-1/2 transform items-center p-8">
               <div
-                className="scrollbar-thumb-rounded-full max-h-full w-max overflow-y-auto rounded-lg bg-white shadow-lg scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-200 dark:bg-neutral-800
+                className="max-h-full w-max overflow-y-auto rounded-lg bg-white shadow-lg scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-200 scrollbar-thumb-rounded-full dark:bg-neutral-800
                dark:scrollbar-thumb-neutral-700"
               >
                 <div className="flex flex-col gap-2 p-4">
@@ -151,7 +151,7 @@ const Inner = ({ data: rawData }: { data: QueryData }) => {
   const [showDetail, setShowDetail] = useState(false);
 
   return (
-    <section className="m-2 flex flex-wrap gap-2 rounded-lg border border-neutral-400 p-2 dark:border-neutral-600">
+    <section className="flex flex-wrap gap-2 rounded-lg border border-neutral-400 p-2 dark:border-neutral-600">
       <SC title="개설부서" data="departments" value="department" />
       <SC title="년도/학기" data="semesters" value="semester" />
       {showDetail && (
