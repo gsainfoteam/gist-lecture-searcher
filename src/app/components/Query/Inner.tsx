@@ -6,45 +6,12 @@ import { createPortal } from "react-dom";
 
 import type fetchData from "@/api/data";
 
-type QueryData = Awaited<ReturnType<typeof fetchData>>;
+import useQuery from "./useQuery";
+
 interface CodeLabel {
   code: string;
   label: string;
 }
-
-const getInitialData = (data: QueryData) => {
-  const year = new Date().getFullYear();
-  const semesters = [
-    ...data.semesters.filter((s) => !s.code),
-    ...[...Array(10)]
-      .map((_, i) => year - i)
-      .flatMap((y) =>
-        data.semesters
-          .filter((s) => s.code)
-          .reverse()
-          .map((s) => ({
-            label: `${y}/${s.label}`,
-            code: `${y}/${s.code}`,
-          })),
-      ),
-  ];
-  const month = new Date().getMonth();
-  const semester = [1, 1, 1, 1, 1, 2, 3, 3, 3, 3, 3, 4][month];
-  const universities = data.universities.filter((u) => u.code);
-
-  return {
-    data: { ...data, universities, semesters },
-    initialData: {
-      university: universities[universities.length - 1].code,
-      department: "",
-      semester: `${year}/${data.semesters[semester].code}`,
-      creditType: "",
-      research: "",
-      level: "",
-      language: "",
-    },
-  };
-};
 
 const SelectChip = ({
   title,
@@ -126,35 +93,8 @@ const SelectChip = ({
   );
 };
 
-const Inner = ({ data: rawData }: { data: QueryData }) => {
-  const { data, initialData } = useMemo(
-    () => getInitialData(rawData),
-    [rawData],
-  );
-  const [query, setQuery] = useState(initialData);
-  const filteredData = {
-    ...data,
-    types: data.types.filter((t) => t.school === query.university || !t.code),
-  };
-  const searchParams = useSearchParams();
-  const { replace } = useRouter();
-
-  useEffect(() => {
-    const params = new URLSearchParams(
-      Object.entries(query).filter(([, v]) => v),
-    );
-    if (params.size) {
-      replace(`?${params.toString()}`);
-    } else {
-      replace(``);
-    }
-  }, [query, replace, searchParams]);
-
-  useEffect(() => {
-    const params = searchParams.entries();
-    const query = Object.fromEntries(params);
-    setQuery({ ...initialData, ...query });
-  }, [searchParams, initialData]);
+const Inner = ({ data: rawData }: { data: Parameters<typeof useQuery>[0] }) => {
+  const { data, query, updateQuery } = useQuery(rawData);
 
   const SC = ({
     title,
@@ -163,13 +103,13 @@ const Inner = ({ data: rawData }: { data: QueryData }) => {
   }: {
     title: string;
     data: keyof typeof data;
-    value: keyof typeof initialData;
+    value: keyof typeof query;
   }) => (
     <SelectChip
       title={title}
-      items={filteredData[dataField]}
+      items={data[dataField]}
       value={query[valueField]}
-      onChangeValue={(v) => setQuery({ ...query, [valueField]: v ?? "" })}
+      onChangeValue={(v) => updateQuery(valueField, v)}
     />
   );
   const [showDetail, setShowDetail] = useState(false);
