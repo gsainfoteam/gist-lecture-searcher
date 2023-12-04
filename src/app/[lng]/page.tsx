@@ -1,5 +1,5 @@
-import Lectures from "./components/Lectures";
-import Query from "./components/Query";
+import Lectures from "../components/Lectures";
+import Query from "../components/Query";
 
 export default async function Home({
   searchParams,
