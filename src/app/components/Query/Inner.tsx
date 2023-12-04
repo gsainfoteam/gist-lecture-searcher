@@ -3,12 +3,47 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 
-import { useQuery } from ".";
+import type fetchData from "@/api/data";
 
+type QueryData = Awaited<ReturnType<typeof fetchData>>;
 interface CodeLabel {
   code: string;
   label: string;
 }
+
+const getInitialData = (data: QueryData) => {
+  const year = new Date().getFullYear();
+  const semesters = [
+    ...data.semesters.filter((s) => !s.code),
+    ...[...Array(10)]
+      .map((_, i) => year - i)
+      .flatMap((y) =>
+        data.semesters
+          .filter((s) => s.code)
+          .reverse()
+          .map((s) => ({
+            label: `${y}/${s.label}`,
+            code: `${y}/${s.code}`,
+          })),
+      ),
+  ];
+  const month = new Date().getMonth();
+  const semester = [1, 1, 1, 1, 1, 2, 3, 3, 3, 3, 3, 4][month];
+  const universities = data.universities.filter((u) => u.code);
+
+  return {
+    data: { ...data, universities, semesters },
+    initialData: {
+      university: universities[universities.length - 1].code,
+      department: "",
+      semester: `${year}/${semester}`,
+      creditType: "",
+      research: "",
+      level: "",
+      language: "",
+    },
+  };
+};
 
 const SelectChip = ({
   title,
@@ -90,8 +125,13 @@ const SelectChip = ({
   );
 };
 
-const Inner = () => {
-  const { data, query, updateQuery } = useQuery();
+const Inner = ({ data: rawData }: { data: QueryData }) => {
+  const { data, initialData } = getInitialData(rawData);
+  const [query, setQuery] = useState(initialData);
+  const filteredData = {
+    ...data,
+    types: data.types.filter((t) => t.school === query.university || !t.code),
+  };
   const SC = ({
     title,
     data: dataField,
@@ -99,13 +139,13 @@ const Inner = () => {
   }: {
     title: string;
     data: keyof typeof data;
-    value: keyof typeof query;
+    value: keyof typeof initialData;
   }) => (
     <SelectChip
       title={title}
-      items={data[dataField]}
+      items={filteredData[dataField]}
       value={query[valueField]}
-      onChangeValue={(v) => updateQuery(valueField, v ?? "")}
+      onChangeValue={(v) => setQuery({ ...query, [valueField]: v ?? "" })}
     />
   );
   const [showDetail, setShowDetail] = useState(false);
