@@ -74,7 +74,9 @@ const Loader = async ({
               </td>
               <td>{course.room}</td>
               <td className="whitespace-pre">{`${course.count}/${course.capacity}`}</td>
-              <td>{course.language}</td>
+              <td>
+                {course.language.replace("Korean", "K").replace("English", "E")}
+              </td>
             </tr>
           ))}
         </tbody>
