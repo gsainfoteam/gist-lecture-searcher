@@ -1,9 +1,10 @@
-import { dataToSSV, extractDatasets, ssvToData } from '@/utils/ssv';
-import axios from 'axios';
-import { NextRequest, NextResponse } from 'next/server';
+import axios from "axios";
+import { NextRequest, NextResponse } from "next/server";
+
+import { dataToSSV, extractDatasets, ssvToData } from "@/utils/ssv";
 
 export async function POST(request: NextRequest) {
-  const path = request.nextUrl.searchParams.get('path');
+  const path = request.nextUrl.searchParams.get("path");
   const res = await axios.post(
     `https://zeus.gist.ac.kr/${path}`,
     dataToSSV({
@@ -14,7 +15,7 @@ export async function POST(request: NextRequest) {
     }),
     {
       headers: {
-        'Content-Type': 'text/plain',
+        "Content-Type": "text/plain",
       },
     },
   );

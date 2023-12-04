@@ -1,6 +1,8 @@
-import fetchData from '@/api/data';
-import { Suspense, use } from 'react';
-import Inner from './Inner';
+import { Suspense, use } from "react";
+
+import fetchData from "@/api/data";
+
+import Inner from "./Inner";
 
 const Loader = async () => {
   const data = await fetchData();

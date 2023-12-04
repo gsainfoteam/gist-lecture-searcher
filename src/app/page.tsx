@@ -1,4 +1,4 @@
-import Query from './components/Query';
+import Query from "./components/Query";
 
 export default async function Home() {
   return (

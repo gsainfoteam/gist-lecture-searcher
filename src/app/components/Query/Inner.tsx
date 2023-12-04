@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import type fetchData from '@/api/data';
-import { useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useState } from "react";
+import { createPortal } from "react-dom";
+
+import type fetchData from "@/api/data";
 
 type QueryData = Awaited<ReturnType<typeof fetchData>>;
 interface CodeLabel {
@@ -34,12 +35,12 @@ const getInitialData = (data: QueryData) => {
     data: { ...data, universities, semesters },
     initialData: {
       university: universities[universities.length - 1].code,
-      department: '',
+      department: "",
       semester: `${year}/${semester}`,
-      creditType: '',
-      research: '',
-      level: '',
-      language: '',
+      creditType: "",
+      research: "",
+      level: "",
+      language: "",
     },
   };
 };
@@ -62,7 +63,7 @@ const SelectChip = ({
       <div className="hidden">{title}</div>
       <div
         className={`bg-neutral-100 dark:bg-neutral-800 p-2 rounded-lg shadow-lg ${
-          selected?.code ? '' : 'text-neutral-600 dark:text-neutral-400'
+          selected?.code ? "" : "text-neutral-600 dark:text-neutral-400"
         }`}
       >
         {selected?.code ? selected.label : title}
@@ -85,7 +86,7 @@ const SelectChip = ({
         createPortal(
           <div
             className="fixed inset-0 z-10 bg-black bg-opacity-50"
-            onKeyDown={(e) => e.key === 'Escape' && setOpen(false)}
+            onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
             onClick={(e) => {
               setOpen(false);
               e.stopPropagation();
@@ -176,7 +177,7 @@ const Inner = ({ data: rawData }: { data: QueryData }) => {
       title={title}
       items={filteredData[dataField]}
       value={query[valueField]}
-      onChangeValue={(v) => setQuery({ ...query, [valueField]: v ?? '' })}
+      onChangeValue={(v) => setQuery({ ...query, [valueField]: v ?? "" })}
     />
   );
   return (

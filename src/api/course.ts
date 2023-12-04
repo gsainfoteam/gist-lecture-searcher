@@ -1,4 +1,4 @@
-import { listQuery } from './zeus';
+import { listQuery } from "./zeus";
 
 interface CourseCommonData {
   /** 년도 */
@@ -110,7 +110,7 @@ const fetchCourse = (params?: {
   research: string;
   level: string;
 }) =>
-  listQuery<Parameters<typeof courseTransform>[0]>('/uls/ulsOpenListQ/select', {
+  listQuery<Parameters<typeof courseTransform>[0]>("/uls/ulsOpenListQ/select", {
     univ_clsf_cd: params?.university, // 대학분류
     yy: params?.year,
     shtm_cd: params?.semester, // 학기
@@ -118,10 +118,10 @@ const fetchCourse = (params?: {
     cptn_div_cd: params?.creditType, // 이수구분
     curs_rech_div_cd: params?.research, // 교과연구
     cors_detl_div_cd: params?.level, // 과정구분
-    lang_div: 'kor', // 응답언어
-    user_div: 'lec', // 고정
-    cncllt_yn: 'N', // 고정값
-    sbjt_nm: '', // 강의명
+    lang_div: "kor", // 응답언어
+    user_div: "lec", // 고정
+    cncllt_yn: "N", // 고정값
+    sbjt_nm: "", // 강의명
     lt_lang: params?.language, // 강의언어
   }).then(courseTransform);
 

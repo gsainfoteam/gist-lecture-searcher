@@ -1,4 +1,4 @@
-import { listQuery } from './zeus';
+import { listQuery } from "./zeus";
 
 interface OptionCode {
   CD: string;
@@ -68,14 +68,14 @@ const dataTransformer = (data: Data) => ({
   semesters: data.dsShtmCd.map(labelCode),
   universities: data.dsUnivClsfCd.map(labelCode),
   departments: data.dsSustMjCd
-    .filter((v) => v.UNIV_GRSC_UNIFY_DEPT_YN === 'Y' || v.CD === '')
+    .filter((v) => v.UNIV_GRSC_UNIFY_DEPT_YN === "Y" || v.CD === "")
     .map(labelCode),
   researches: data.dsCursRechDivCd.map(labelCode),
   credits: data.dsCptnDivCd.map(labelCode),
 });
 
 const fetchData = () =>
-  listQuery<Data>('/uls/ulsOpenListQ/onload', { lang_div: 'kor' }).then(
+  listQuery<Data>("/uls/ulsOpenListQ/onload", { lang_div: "kor" }).then(
     dataTransformer,
   );
 

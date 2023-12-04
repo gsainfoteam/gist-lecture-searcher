@@ -1,12 +1,13 @@
-import type { Metadata } from 'next';
-import { Noto_Sans_KR } from 'next/font/google';
-import './globals.css';
+import "./globals.css";
 
-const notoSansKR = Noto_Sans_KR({ subsets: ['latin'] });
+import type { Metadata } from "next";
+import { Noto_Sans_KR } from "next/font/google";
+
+const notoSansKR = Noto_Sans_KR({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Hêra system',
-  description: 'Zeus v2',
+  title: "Hêra system",
+  description: "Zeus v2",
 };
 
 export default function RootLayout({
