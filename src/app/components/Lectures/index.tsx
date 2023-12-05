@@ -6,6 +6,7 @@ import fetchData from "@/api/data";
 import { createTranslation, PropsWithLng } from "@/app/i18next";
 
 import useQueryServer from "../Query/useQueryServer";
+import Inner from "./Inner";
 
 const Loader = async ({
   lng,
@@ -26,63 +27,8 @@ const Loader = async ({
     year: semester.split("/")[0],
     semester: semester.split("/")[1],
   });
-  return (
-    <section>
-      <table>
-        <thead>
-          <tr>
-            <th>{t("code")}</th>
-            <th>{t("title")}</th>
-            <th>{t("creditTypes")}</th>
-            <th>{t("professor")}</th>
-            <th>{t("pnt")}</th>
-            <th>{t("timeTables")}</th>
-            <th>{t("room")}</th>
-            <th>{t("count")}</th>
-            <th>{t("languages")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {courses.map((course) => (
-            <tr key={course.code}>
-              <td className="whitespace-pre">{course.code}</td>
-              <td>{course.name}</td>
-              <td>{course.creditType}</td>
-              <td>
-                {course.professor
-                  .replace(/\[.+\]/g, "")
-                  .split("\n")
-                  .join(", ")}
-              </td>
-              <td>{course.pnt.replaceAll("/", "")}</td>
-              <td className="whitespace-pre">
-                {Object.entries(
-                  course.timeTable
-                    .split("\n")
-                    .filter(Boolean)
-                    .map((v) => v.split(" "))
-                    .reduce<Record<string, string[]>>(
-                      (prev, curr) => ({
-                        ...prev,
-                        [curr[1]]: [...(prev[curr[1]] ?? []), curr[0]],
-                      }),
-                      {},
-                    ),
-                )
-                  .map(([time, days]) => `${days.join(", ")} ${time}`)
-                  .join("\n")}
-              </td>
-              <td>{course.room}</td>
-              <td className="whitespace-pre">{`${course.count}/${course.capacity}`}</td>
-              <td>
-                {course.language.replace("Korean", "K").replace("English", "E")}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
-  );
+
+  return <Inner courses={courses} lng={lng} />;
 };
 
 const Lectures = ({

@@ -10,11 +10,13 @@ export default async function Home({
   searchParams: Record<string, string>;
 }) {
   return (
-    <main>
+    <main className="flex max-h-screen flex-col overflow-hidden">
       <div className="sticky top-0 bg-white p-2 dark:bg-neutral-900">
         <Query lng={lng} />
       </div>
-      <Lectures searchParams={searchParams} lng={lng} />
+      <div className="flex-1 p-2">
+        <Lectures searchParams={searchParams} lng={lng} />
+      </div>
     </main>
   );
 }
