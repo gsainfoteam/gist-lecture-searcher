@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 
+import type { Syllabuses } from "@/app/api/syllabuses/route";
+
 import { Course } from "./course";
 
 const useSyllabuses = (course?: Course) => {
-  const [pages, setPages] = useState<string[]>();
+  const [syllabuses, setSyllabuses] = useState<Syllabuses>();
 
   useEffect(() => {
-    if (!course) {
-      setPages(undefined);
-      return () => {};
-    }
+    if (!course) return setSyllabuses(undefined);
     let cancelled = false;
 
     fetch("/api/syllabuses", {
@@ -18,12 +17,14 @@ const useSyllabuses = (course?: Course) => {
     }).then(async (res) => {
       const data = await res.json();
       if (cancelled) return;
-      setPages(data.pages);
+      setSyllabuses(data);
     });
-    return () => (cancelled = true);
+    return () => {
+      cancelled = true;
+    };
   }, [course]);
 
-  return course ? { pages } : undefined;
+  return syllabuses;
 };
 
 export default useSyllabuses;

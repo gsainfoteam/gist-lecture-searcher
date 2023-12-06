@@ -115,6 +115,31 @@ const getFile = async (uid: string, exportOption: object) => {
   return workbook;
 };
 
+export interface Syllabuses {
+  pages: string[];
+  classification: string;
+  code: string;
+  pnt: string;
+  instructor: string;
+  language: string;
+  title: {
+    korean: string;
+    english: string;
+  };
+  outline: string;
+  prerequisite: string;
+  references: string;
+  lectureMethod: string;
+  grading: string;
+  etc: string;
+  schedules: {
+    week: string;
+    description: string;
+    remarks: string;
+    onoff: string;
+  }[];
+}
+
 export async function POST(req: NextRequest) {
   const jsonBody = await req.json();
   const uid = await getUid(jsonBody);
