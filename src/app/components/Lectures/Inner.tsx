@@ -139,6 +139,7 @@ const Inner = ({ courses, lng }: PropsWithLng<{ courses: Course[] }>) => {
         </table>
       </section>
       <SyllabusesModal
+        lng={lng}
         title={selectedCourse?.name}
         syllabuses={syllabuses}
         onClose={() => setSelectedCourse(undefined)}

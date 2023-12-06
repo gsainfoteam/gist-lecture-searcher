@@ -12,5 +12,16 @@
   "pnt": "강실학",
   "timeTables": "시간표",
   "room": "강의실",
-  "count": "인원"
+  "count": "인원",
+  "outline": "교과목 개요",
+  "prerequisite": "선이수과목",
+  "references": "교재&참고자료",
+  "lectureMethod": "강의 방법",
+  "grading": "평가 방법",
+  "etc": "참고사항",
+  "schedules": "강의 계획",
+  "week": "주",
+  "description": "설명",
+  "remarks": "평가",
+  "onoff": "온/오프라인"
 }

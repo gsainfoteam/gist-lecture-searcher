@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 import type { Syllabuses as SyllabusesType } from "@/app/api/syllabuses/route";
+import { PropsWithLng } from "@/app/i18next";
+import { useTranslation } from "@/app/i18next/client";
 
 import Syllabuses from "../Syllabus";
 
@@ -11,11 +13,13 @@ const SyllabusesModal = ({
   title,
   syllabuses,
   onClose: propOnClose,
-}: {
+  lng,
+}: PropsWithLng<{
   title?: string;
   syllabuses?: SyllabusesType;
   onClose: () => void;
-}) => {
+}>) => {
+  const { t } = useTranslation(lng);
   const [open, setOpen] = useState(false);
   const [showOriginal, setShowOriginal] = useState(false);
   const onClose = () => {
@@ -64,38 +68,82 @@ const SyllabusesModal = ({
                 showOriginal ? (
                   <Syllabuses pages={syllabuses.pages} />
                 ) : (
-                  <div>
-                    <div>title(korean): {syllabuses.title.korean}</div>
-                    <div>title(english): {syllabuses.title.english}</div>
-                    <div>classification: {syllabuses.classification}</div>
-                    <div>code: {syllabuses.code}</div>
-                    <div>pnt: {syllabuses.pnt}</div>
-                    <div>instructor: {syllabuses.instructor}</div>
-                    <div>language: {syllabuses.language}</div>
-                    <div className="whitespace-pre-wrap">
-                      outline: {syllabuses.outline}
-                    </div>
-                    <div className="whitespace-pre-wrap">
-                      prerequisite: {syllabuses.prerequisite}
-                    </div>
-                    <div className="whitespace-pre-wrap">
-                      references: {syllabuses.references}
-                    </div>
-                    <div className="whitespace-pre-wrap">
-                      lectureMethod: {syllabuses.lectureMethod}
-                    </div>
-                    <div>grading: {syllabuses.grading}</div>
-                    <div>etc: {syllabuses.etc}</div>
-                    <div>schedules</div>
-                    <ul className="list-disc pl-4">
-                      {syllabuses.schedules.map((schedule) => (
-                        <li key={schedule.week}>
-                          {schedule.week}: {schedule.description} /{" "}
-                          {schedule.remarks} ({schedule.onoff})
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <table className="border-2 [&_td]:border [&_th]:border">
+                    <tr>
+                      <th>{t("universities")}</th>
+                      <td>{syllabuses.classification}</td>
+                      <th>{t("code")}</th>
+                      <td>{syllabuses.code}</td>
+                      <th>{t("pnt")}</th>
+                      <td>{syllabuses.pnt}</td>
+                      <th>{t("professor")}</th>
+                      <td>{syllabuses.instructor}</td>
+                      <th>{t("languages")}</th>
+                      <td>{syllabuses.language}</td>
+                    </tr>
+                    <tr>
+                      <th rowSpan={2}>{t("title")}</th>
+                      <th>Korean</th>
+                      <td colSpan={8}>{syllabuses.title.korean}</td>
+                    </tr>
+                    <tr>
+                      <th>English</th>
+                      <td colSpan={8}>{syllabuses.title.english}</td>
+                    </tr>
+                    <tr>
+                      <th>{t("outline")}</th>
+                      <td colSpan={9} className="whitespace-pre-wrap">
+                        {syllabuses.outline}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>{t("prerequisite")}</th>
+                      <td colSpan={9} className="whitespace-pre-wrap">
+                        {syllabuses.prerequisite}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>{t("references")}</th>
+                      <td colSpan={9} className="whitespace-pre-wrap">
+                        {syllabuses.references}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>{t("lectureMethod")}</th>
+                      <td colSpan={9} className="whitespace-pre-wrap">
+                        {syllabuses.lectureMethod}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>{t("grading")}</th>
+                      <td colSpan={9} className="whitespace-pre-wrap">
+                        {syllabuses.grading}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>{t("etc")}</th>
+                      <td colSpan={9} className="whitespace-pre-wrap">
+                        {syllabuses.etc}
+                      </td>
+                    </tr>
+                    <tr className="border-y-2">
+                      <th colSpan={10}>{t("schedules")}</th>
+                    </tr>
+                    <tr className="border-y-2">
+                      <th>{t("week")}</th>
+                      <th colSpan={7}>{t("description")}</th>
+                      <th colSpan={1}>{t("remarks")}</th>
+                      <th colSpan={1}>{t("onoff")}</th>
+                    </tr>
+                    {syllabuses.schedules.map((schedule) => (
+                      <tr key={schedule.week}>
+                        <td className="text-center">{schedule.week}</td>
+                        <td colSpan={7}>{schedule.description}</td>
+                        <td colSpan={1}>{schedule.remarks}</td>
+                        <td colSpan={1}>{schedule.onoff}</td>
+                      </tr>
+                    ))}
+                  </table>
                 )
               ) : (
                 <div className="flex items-center justify-center">

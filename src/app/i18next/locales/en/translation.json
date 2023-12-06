@@ -1,7 +1,7 @@
 {
   "departments": "Opened By",
   "semesters": "Year/Semester",
-  "universities": "Graduate/undergraduate",
+  "universities": "Graduate / undergraduate",
   "creditTypes": "Credit Type",
   "researches": "Classification",
   "levels": "Level",
@@ -12,5 +12,16 @@
   "pnt": "Credit",
   "timeTables": "Timetable",
   "room": "Class Room",
-  "count": "Size"
+  "count": "Size",
+  "outline": "Course Outline",
+  "prerequisite": "Prerequisite",
+  "references": "Textbook & References",
+  "lectureMethod": "Lecture Method",
+  "grading": "Grading",
+  "etc": "Etcetera",
+  "schedules": "Schedules",
+  "week": "Week",
+  "description": "Description",
+  "remarks": "Remarks",
+  "onoff": "On/Off-line"
 }
