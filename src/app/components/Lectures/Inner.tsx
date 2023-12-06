@@ -90,8 +90,8 @@ const Inner = ({ courses, lng }: PropsWithLng<{ courses: Course[] }>) => {
 
   return (
     <>
-      <section className="block">
-        <table className="border border-gray-200 dark:border-gray-600">
+      <section className="block flex-1 overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-200 scrollbar-thumb-rounded-full dark:scrollbar-thumb-neutral-700">
+        <table className="min-w-full border border-gray-200 dark:border-gray-600">
           <thead className="bg-white dark:bg-neutral-900">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
@@ -121,7 +121,7 @@ const Inner = ({ courses, lng }: PropsWithLng<{ courses: Course[] }>) => {
               </tr>
             ))}
           </thead>
-          <tbody className="overflow-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-200 scrollbar-thumb-rounded-full  dark:scrollbar-thumb-neutral-700">
+          <tbody>
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
