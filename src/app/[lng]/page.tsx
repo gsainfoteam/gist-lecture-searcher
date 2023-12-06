@@ -10,7 +10,7 @@ export default async function Home({
   searchParams: Record<string, string>;
 }) {
   return (
-    <main className="flex max-h-screen flex-col items-stretch overflow-hidden">
+    <main className="flex h-screen max-h-screen flex-col items-stretch overflow-hidden">
       <div className="sticky top-0 bg-white p-2 dark:bg-neutral-900">
         <Query lng={lng} />
       </div>
