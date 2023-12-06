@@ -130,4 +130,5 @@ const fetchCourse = (
     lt_lang: params?.language, // 강의언어
   }).then(courseTransform);
 
+export type Course = ReturnType<typeof courseTransform>[0];
 export default fetchCourse;
