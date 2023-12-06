@@ -33,7 +33,7 @@ export default function Syllabuses({ pages }: { pages: string[] }) {
       {pages.map((page, i) => (
         <div
           key={i}
-          className="relative origin-top-left"
+          className="relative origin-top-left dark:invert-[85%]"
           dangerouslySetInnerHTML={{ __html: page }}
         />
       ))}
