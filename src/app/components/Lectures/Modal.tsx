@@ -48,8 +48,15 @@ const SyllabusesModal = ({
             className="animate-bottomUp max-h-full overflow-auto rounded-lg bg-white p-2 shadow-lg scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-200 scrollbar-thumb-rounded-full dark:bg-neutral-800 dark:scrollbar-thumb-neutral-700 md:p-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="mb-2 flex justify-between font-bold">
-              <div className="mr-4">{title}</div>
+            <div className="mb-2 flex gap-2">
+              <div className="mr-4 font-bold">{title}</div>
+              <div className="flex-1" />
+              <button
+                className="rounded-lg bg-neutral-200 p-1 dark:bg-neutral-600"
+                onClick={() => setShowOriginal((prev) => !prev)}
+              >
+                show {showOriginal ? "summary" : "original"}
+              </button>
               <button onClick={onClose}>X</button>
             </div>
             {syllabuses?.pages.length ? (
