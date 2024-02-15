@@ -6,21 +6,75 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import type { Course } from "@/api/course";
 import useSyllabuses from "@/api/syllabuses";
 import { PropsWithLng } from "@/app/i18next";
 import { useTranslation } from "@/app/i18next/client";
 
-import SyllabusesModal from "./Modal";
+import RegistrationInfoModal from "./RegistrationInfoModal";
+import SyllabusesModal from "./SyllabusesModal";
 
 const columnHelper = createColumnHelper<Course>();
 
+export interface RegistrationInfo extends Course {
+  countStamps: {
+    time: string;
+    count: number;
+  }[];
+}
+
 const Inner = ({ courses, lng }: PropsWithLng<{ courses: Course[] }>) => {
   const { t } = useTranslation(lng);
-  const [selectedCourse, setSelectedCourse] = useState<Course>();
-  const syllabuses = useSyllabuses(selectedCourse);
+  const [selectedSyllabusCourse, setSelectedSyllabusCourse] =
+    useState<Course>();
+  const syllabuses = useSyllabuses(selectedSyllabusCourse);
+
+  const [selectedRegistrationInfoCourse, setSelectedRegistrationInfoCourse] =
+    useState<Course>();
+
+  const [registrationInfo, setRegistrationInfo] = useState<RegistrationInfo>();
+
+  useEffect(() => {
+    const fileAllocator = () => {
+      if (
+        selectedRegistrationInfoCourse?.year === "2023" &&
+        selectedRegistrationInfoCourse?.semester === "USR03.20"
+      ) {
+        return "2023-fall.json";
+      }
+
+      if (
+        selectedRegistrationInfoCourse?.year === "2024" &&
+        selectedRegistrationInfoCourse?.semester === "USR03.10"
+      ) {
+        return "2024-spring.json";
+      }
+
+      return null;
+    };
+
+    const allocatedFile = fileAllocator();
+
+    const registrationInfoFile: RegistrationInfo[] = allocatedFile
+      ? require(`@/../public/${allocatedFile}`)
+      : null;
+
+    if (registrationInfoFile && selectedRegistrationInfoCourse) {
+      const registrationInfo = registrationInfoFile.find(
+        (registrationInfo) =>
+          selectedRegistrationInfoCourse.subjectCode +
+            selectedRegistrationInfoCourse.classCode ===
+          registrationInfo.subjectCode + registrationInfo.classCode,
+      );
+
+      setRegistrationInfo(registrationInfo);
+      console.log(registrationInfo);
+    } else {
+      setRegistrationInfo(undefined);
+    }
+  }, [selectedRegistrationInfoCourse]);
 
   const columns = useMemo(
     () => [
@@ -29,13 +83,23 @@ const Inner = ({ courses, lng }: PropsWithLng<{ courses: Course[] }>) => {
         cell: (cell) => (
           <button
             className="text-blue-500 hover:underline"
-            onClick={() => setSelectedCourse(cell.row.original)}
+            onClick={() => setSelectedSyllabusCourse(cell.row.original)}
           >
             {cell.getValue()}
           </button>
         ),
       }),
-      columnHelper.accessor("name", { header: t("title") }),
+      columnHelper.accessor("name", {
+        header: t("title"),
+        cell: (cell) => (
+          <button
+            className="text-blue-500 hover:underline"
+            onClick={() => setSelectedRegistrationInfoCourse(cell.row.original)}
+          >
+            {cell.getValue()}
+          </button>
+        ),
+      }),
       columnHelper.accessor("creditType", { header: t("creditTypes") }),
       columnHelper.accessor("professor", {
         header: t("professor"),
@@ -140,9 +204,13 @@ const Inner = ({ courses, lng }: PropsWithLng<{ courses: Course[] }>) => {
       </section>
       <SyllabusesModal
         lng={lng}
-        title={selectedCourse?.name}
+        title={selectedSyllabusCourse?.name}
         syllabuses={syllabuses}
-        onClose={() => setSelectedCourse(undefined)}
+        onClose={() => setSelectedSyllabusCourse(undefined)}
+      />
+      <RegistrationInfoModal
+        registrationInfo={registrationInfo}
+        onClose={() => setSelectedRegistrationInfoCourse(undefined)}
       />
     </>
   );
