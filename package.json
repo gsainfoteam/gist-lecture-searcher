@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-spring/web": "^9.7.3",
     "@tanstack/react-table": "^8.10.7",
     "@vercel/analytics": "^1.1.1",
     "accept-language": "^3.0.18",
@@ -21,7 +22,8 @@
     "react": "^18",
     "react-cookie": "^6.1.1",
     "react-dom": "^18",
-    "react-i18next": "^13.5.0"
+    "react-i18next": "^13.5.0",
+    "recharts": "^2.12.0"
   },
   "devDependencies": {
     "@types/node": "^20",

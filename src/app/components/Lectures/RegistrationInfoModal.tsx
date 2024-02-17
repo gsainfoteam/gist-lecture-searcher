@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-import { RegistrationInfo } from "./Inner";
+import { CountStamp, RegistrationInfo } from "./Inner";
 
 interface RegistrationInfoModalProps {
   registrationInfo?: RegistrationInfo;
@@ -45,11 +53,17 @@ const RegistrationInfoModal = ({
             className="flex max-h-full max-w-full animate-bottomUp flex-col bg-white p-2 shadow-lg dark:bg-neutral-800 md:rounded-lg md:p-4"
             onClick={(e) => e.stopPropagation()}
           >
-            {registrationInfo.countStamps.map((countStamp, i) => (
-              <div key={countStamp.time}>
-                {countStamp.time}: {countStamp.count}
-              </div>
-            ))}
+            <LineChart
+              width={800}
+              height={400}
+              data={registrationInfo.countStamps}
+            >
+              <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+              <Line type="monotone" dataKey={"count"} stroke="#8884d8" />
+              <XAxis dataKey="time" />
+              <YAxis domain={[0, registrationInfo.capacity]} />
+              <Tooltip />
+            </LineChart>
           </div>
         </div>
       </div>

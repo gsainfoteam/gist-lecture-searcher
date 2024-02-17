@@ -18,11 +18,13 @@ import SyllabusesModal from "./SyllabusesModal";
 
 const columnHelper = createColumnHelper<Course>();
 
+export interface CountStamp {
+  time: string;
+  count: number;
+}
+
 export interface RegistrationInfo extends Course {
-  countStamps: {
-    time: string;
-    count: number;
-  }[];
+  countStamps: CountStamp[];
 }
 
 const Inner = ({ courses, lng }: PropsWithLng<{ courses: Course[] }>) => {
