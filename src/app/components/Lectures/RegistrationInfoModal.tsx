@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 
-import { CountStamp, RegistrationInfo } from "./Inner";
+import { RegistrationInfo } from "./Inner";
 
 interface RegistrationInfoModalProps {
   registrationInfo?: RegistrationInfo;
@@ -53,6 +53,10 @@ const RegistrationInfoModal = ({
             className="flex max-h-full max-w-full animate-bottomUp flex-col bg-white p-2 shadow-lg dark:bg-neutral-800 md:rounded-lg md:p-4"
             onClick={(e) => e.stopPropagation()}
           >
+            <div className="flex justify-center">
+              {registrationInfo.name} / {registrationInfo.subjectCode}-
+              {registrationInfo.classCode}
+            </div>
             <LineChart
               width={800}
               height={400}

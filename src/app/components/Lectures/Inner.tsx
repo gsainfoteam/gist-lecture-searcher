@@ -72,7 +72,6 @@ const Inner = ({ courses, lng }: PropsWithLng<{ courses: Course[] }>) => {
       );
 
       setRegistrationInfo(registrationInfo);
-      console.log(registrationInfo);
     } else {
       setRegistrationInfo(undefined);
     }
